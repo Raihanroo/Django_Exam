@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Draft Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-top: 50px; }
+        .table thead { background-color: #343a40; color: white; }
+        .btn-approve { background-color: #ffc107; color: black; font-weight: bold; border: none; }
+        .btn-approve:hover { background-color: #e0a800; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="mb-4 text-center">Upload Excel & Manage Drafts</h2>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row mb-4 p-3 border rounded bg-light">
+        <form method="POST" enctype="multipart/form-data" class="d-flex align-items-center">
+            {% csrf_token %}
+            <input type="file" name="excel_file" class="form-control me-2" style="max-width: 400px;" required>
+            <button type="submit" class="btn btn-primary me-auto">Upload Excel</button>
+            <a href="{% url 'approved_products' %}" class="btn btn-success">View Approved Products</a>
+        </form>
+    </div>
+
+    <h3>Draft Products List</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle text-center">
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Last Updated</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in page_obj %}
+                <tr>
+                    <td>{{ p.product_id }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.category }}</td>
+                    <td>${{ p.price }}</td>
+                    <td>{{ p.quantity }}</td>
+                    <td>{{ p.last_updated|date:"M d, Y H:i" }}</td>
+                    <td>
+                        <a href="{% url 'approve_product' p.pk %}" class="btn btn-approve btn-sm px-3">Approve</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="7">No draft products found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% endif %}
+            <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
