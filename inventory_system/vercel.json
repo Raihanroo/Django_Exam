@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "your_project_name/wsgi.py",
+      "src": "inventory_system/wsgi.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "your_project_name/wsgi.py"
+      "dest": "inventory_system/wsgi.py"
     }
   ]
 }
