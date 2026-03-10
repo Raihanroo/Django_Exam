@@ -1,0 +1,13 @@
+[project]
+name = "django-exam"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "django",
+    "djangorestframework",
+    "psycopg2-binary",
+    "whitenoise",
+    "gunicorn",
+    "python-dotenv",
+    "dj-database-url"
+]
