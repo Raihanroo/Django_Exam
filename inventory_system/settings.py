@@ -8,9 +8,9 @@ load_dotenv()
 # Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start settings
-SECRET_KEY = "django-insecure-^i!7jj6a(=1ol04c!w!&^ihx%^r+145@l@*rezr=_pd!r-7l53"
-DEBUG = True
+# Security
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-^i!7jj6a(=1ol04c!w!&^ihx%^r+145@l@*rezr=_pd!r-7l53")
+DEBUG = os.environ.get("DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["*"]
 
 # Application definition
@@ -21,8 +21,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "crispy_forms",
+    "crispy_bootstrap5",
     "products",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -40,7 +45,7 @@ ROOT_URLCONF = "inventory_system.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -54,20 +59,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "inventory_system.wsgi.application"
 
-# Database Configuration
-# Vercel-এর DATABASE_URL থেকে ডাটাবেস কানেক্ট হবে
+# Database
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
+        default=os.environ.get(
+            "DATABASE_URL",
+            "postgresql://neondb_owner:npg_e5EK8nBSkJpg@ep-gentle-credit-a15k8ibk-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require",
+        ),
         conn_max_age=600,
     )
 }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
@@ -79,10 +84,14 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = "static/"
+# Static files
+STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+# Media files (note: Vercel is read-only, use external storage for production media)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

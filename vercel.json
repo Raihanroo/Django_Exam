@@ -5,9 +5,20 @@
       "src": "inventory_system/wsgi.py",
       "use": "@vercel/python",
       "config": { "runtime": "python3.11" }
+    },
+    {
+      "src": "build_files.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles"
+      }
     }
   ],
   "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "inventory_system/wsgi.py"
