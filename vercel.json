@@ -16,6 +16,18 @@
   ],
   "routes": [
     {
+      "src": "/static/API_Documentation_RealProject.html",
+      "dest": "/static/API_Documentation_RealProject.html"
+    },
+    {
+      "src": "/static/API_Code_Documentation.html",
+      "dest": "/static/API_Code_Documentation.html"
+    },
+    {
+      "src": "/static/API_Documentation.html",
+      "dest": "/static/API_Documentation.html"
+    },
+    {
       "src": "/static/(.*)",
       "dest": "/static/$1"
     },
