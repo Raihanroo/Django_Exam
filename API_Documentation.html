@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory System - API Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .endpoint {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .endpoint .method {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .endpoint .method.post {
+            background: #27ae60;
+        }
+
+        .endpoint .method.get {
+            background: #3498db;
+        }
+
+        .endpoint .path {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .endpoint .description {
+            margin-top: 15px;
+            color: #555;
+        }
+
+        .endpoint .parameters {
+            margin-top: 15px;
+        }
+
+        .endpoint .parameters h4 {
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table th,
+        table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background: #2c3e50;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .model {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .model code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .flow-diagram {
+            background: #fff;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .flow-diagram .step {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        .flow-diagram .arrow {
+            font-size: 20px;
+            color: #7f8c8d;
+        }
+
+        .status-codes {
+            margin-top: 15px;
+        }
+
+        .status-code {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .status-code.success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .status-code.error {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+            color: #7f8c8d;
+        }
+
+        .info-box {
+            background: #e8f4fd;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .warning-box {
+            background: #fef9e7;
+            border-left: 4px solid #f1c40f;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        @media print {
+            body {
+                padding: 20px;
+            }
+
+            .endpoint {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>📦 Inventory System</h1>
+        <p class="subtitle">API Logic Documentation</p>
+        <p style="margin-top: 10px; color: #7f8c8d;">Django-based Product Management System</p>
+    </div>
+
+    <div class="section">
+        <h2>1. System Overview</h2>
+        <p>The Inventory System is a Django-based web application designed for managing products through an approval
+            workflow. Users can upload product data via Excel files, review drafts, and approve products for the main
+            inventory.</p>
+
+        <div class="info-box">
+            <strong>Key Features:</strong>
+            <ul>
+                <li>Excel file upload for bulk product import</li>
+                <li>Draft/Approval workflow</li>
+                <li>Search and filtering capabilities</li>
+                <li>Paginated product listings</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Data Model</h2>
+        <div class="model">
+            <h3>Product Model</h3>
+            <table>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Constraints</th>
+                </tr>
+                <tr>
+                    <td><code>id</code></td>
+                    <td>AutoField</td>
+                    <td>Primary Key</td>
+                    <td>Auto-generated</td>
+                </tr>
+                <tr>
+                    <td><code>product_id</code></td>
+                    <td>IntegerField</td>
+                    <td>Unique product identifier</td>
+                    <td>Unique, Required</td>
+                </tr>
+                <tr>
+                    <td><code>name</code></td>
+                    <td>CharField</td>
+                    <td>Product name</td>
+                    <td>max_length=255</td>
+                </tr>
+                <tr>
+                    <td><code>category</code></td>
+                    <td>CharField</td>
+                    <td>Product category</td>
+                    <td>max_length=100</td>
+                </tr>
+                <tr>
+                    <td><code>price</code></td>
+                    <td>DecimalField</td>
+                    <td>Product price</td>
+                    <td>max_digits=10, decimal_places=2</td>
+                </tr>
+                <tr>
+                    <td><code>quantity</code></td>
+                    <td>IntegerField</td>
+                    <td>Stock quantity</td>
+                    <td>Required</td>
+                </tr>
+                <tr>
+                    <td><code>status</code></td>
+                    <td>CharField</td>
+                    <td>Product status</td>
+                    <td>Choices: Draft, Approved</td>
+                </tr>
+                <tr>
+                    <td><code>last_updated</code></td>
+                    <td>DateTimeField</td>
+                    <td>Last modification timestamp</td>
+                    <td>auto_now=True</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. API Endpoints</h2>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/</span>
+            <p class="description"><strong>Upload & Drafts Page</strong> - Displays the upload form and list of draft
+                products with pagination.</p>
+
+            <div class="parameters">
+                <h4>Query Parameters:</h4>
+                <table>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>page</td>
+                        <td>Integer</td>
+                        <td>No</td>
+                        <td>Page number for pagination (default: 1)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="parameters">
+                <h4>Form Data (POST):</h4>
+                <table>
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>excel_file</td>
+                        <td>File</td>
+                        <td>Yes</td>
+                        <td>Excel (.xlsx) file containing product data</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="status-codes">
+                <strong>Response Codes:</strong>
+                <span class="status-code success">200 OK</span>
+                <span class="status-code success">302 Redirect</span>
+                <span class="status-code error">500 Error</span>
+            </div>
+
+            <div class="warning-box">
+                <strong>Excel File Format:</strong> The file must contain columns: product_id, name, category, price,
+                quantity
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/</span>
+            <p class="description"><strong>Excel Upload Handler</strong> - Processes Excel file upload and
+                creates/updates products with "Draft" status.</p>
+
+            <div class="parameters">
+                <h4>Processing Logic:</h4>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Read Excel file using pandas library</li>
+                    <li>Iterate through each row in the spreadsheet</li>
+                    <li>Use <code>update_or_create()</code> to insert or update product</li>
+                    <li>Set status to "Draft" for all imported products</li>
+                    <li>Redirect back to drafts page with success message</li>
+                </ol>
+            </div>
+
+            <div class="info-box">
+                <strong>Key Function:</strong> <code>Product.objects.update_or_create(product_id, defaults={...})</code>
+                <br>This ensures idempotency - same product_id updates existing record instead of creating duplicate.
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/approve/<pk>/</span>
+            <p class="description"><strong>Approve Product</strong> - Approves a specific draft product and changes its
+                status to "Approved".</p>
+
+            <div class="parameters">
+                <h4>URL Parameters:</h4>
+                <table>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>pk</td>
+                        <td>Integer</td>
+                        <td>Primary key of the product to approve</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="parameters">
+                <h4>Processing Logic:</h4>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Fetch product by primary key using <code>get_object_or_404()</code></li>
+                    <li>Update status field to "Approved"</li>
+                    <li>Save the product object</li>
+                    <li>Display success message</li>
+                    <li>Redirect to drafts page</li>
+                </ol>
+            </div>
+
+            <div class="status-codes">
+                <strong>Response Codes:</strong>
+                <span class="status-code success">302 Redirect</span>
+                <span class="status-code error">404 Not Found</span>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/approved/</span>
+            <p class="description"><strong>Approved Products List</strong> - Displays all approved products with search
+                and pagination.</p>
+
+            <div class="parameters">
+                <h4>Query Parameters:</h4>
+                <table>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>q</td>
+                        <td>String</td>
+                        <td>No</td>
+                        <td>Search query for filtering by name or category</td>
+                    </tr>
+                    <tr>
+                        <td>page</td>
+                        <td>Integer</td>
+                        <td>No</td>
+                        <td>Page number for pagination</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="parameters">
+                <h4>Search Logic:</h4>
+                <div class="info-box">
+                    Uses Django Q objects for case-insensitive search:
+                    <br><code>Q(name__icontains=query) | Q(category__icontains=query)</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. Workflow Diagram</h2>
+
+        <div class="flow-diagram">
+            <div class="step">Upload Excel</div>
+            <span class="arrow">→</span>
+            <div class="step">Parse Data</div>
+            <span class="arrow">→</span>
+            <div class="step">Create Drafts</div>
+            <span class="arrow">→</span>
+            <div class="step">Review</div>
+            <span class="arrow">→</span>
+            <div class="step">Approve</div>
+            <span class="arrow">→</span>
+            <div class="step">Listed</div>
+        </div>
+
+        <h3>Detailed Flow:</h3>
+        <ol style="margin-left: 20px; line-height: 2;">
+            <li><strong>Step 1:</strong> User uploads Excel file with product data</li>
+            <li><strong>Step 2:</strong> System reads and parses Excel using pandas</li>
+            <li><strong>Step 3:</strong> Products are created with "Draft" status</li>
+            <li><strong>Step 4:</strong> Admin reviews draft products</li>
+            <li><strong>Step 5:</strong> Admin clicks approve button</li>
+            <li><strong>Step 6:</strong> Product status changes to "Approved"</li>
+            <li><strong>Step 7:</strong> Product appears in approved products list</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>5. Response Templates</h2>
+
+        <h3>Success Messages:</h3>
+        <table>
+            <tr>
+                <th>Action</th>
+                <th>Message Format</th>
+            </tr>
+            <tr>
+                <td>Excel Upload</td>
+                <td>"Excel uploaded successfully!"</td>
+            </tr>
+            <tr>
+                <td>Product Approval</td>
+                <td>"Product {product_id} approved!"</td>
+            </tr>
+        </table>
+
+        <h3>Error Messages:</h3>
+        <table>
+            <tr>
+                <th>Scenario</th>
+                <th>Message Format</th>
+            </tr>
+            <tr>
+                <td>Excel Upload Error</td>
+                <td>"Error: {exception_message}"</td>
+            </tr>
+            <tr>
+                <td>Product Not Found</td>
+                <td>404 Page Not Found</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>6. Pagination</h2>
+        <p>Both draft and approved product lists use Django's <code>Paginator</code> with the following settings:</p>
+        <ul style="margin-left: 20px; margin-top: 10px;">
+            <li><strong>Items per page:</strong> 10 products</li>
+            <li><strong>Ordering:</strong> By <code>last_updated</code> (newest first)</li>
+            <li><strong>URL format:</strong> <code>?page=2</code></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>7. URL Routing</h2>
+        <table>
+            <tr>
+                <th>URL Pattern</th>
+                <th>View Function</th>
+                <th>Name</th>
+            </tr>
+            <tr>
+                <td><code>/</code></td>
+                <td>upload_and_drafts</td>
+                <td>upload_and_drafts</td>
+            </tr>
+            <tr>
+                <td><code>/approve/<int:pk>/</code></td>
+                <td>approve_product</td>
+                <td>approve_product</td>
+            </tr>
+            <tr>
+                <td><code>/approved/</code></td>
+                <td>approved_products</td>
+                <td>approved_products</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>8. Technology Stack</h2>
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>Technology</th>
+            </tr>
+            <tr>
+                <td>Backend Framework</td>
+                <td>Django 5.2.1</td>
+            </tr>
+            <tr>
+                <td>Database</td>
+                <td>SQLite3 / PostgreSQL</td>
+            </tr>
+            <tr>
+                <td>Data Processing</td>
+                <td>Pandas 2.2.2</td>
+            </tr>
+            <tr>
+                <td>Excel Handling</td>
+                <td>openpyxl 3.1.2</td>
+            </tr>
+            <tr>
+                <td>Frontend</td>
+                <td>HTML5, CSS3, Bootstrap</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p><strong>Inventory System API Documentation</strong></p>
+        <p>Prepared for Supervisor Review</p>
+        <p style="margin-top: 10px; font-size: 0.9em;">Generated on: March 2026</p>
+    </div>
+
+    <script>
+        // Auto-print prompt when page loads
+        window.onload = function () {
+            // Uncomment the line below to auto-prompt print dialog
+            // window.print();
+        };
+    </script>
+</body>
+
+</html>
