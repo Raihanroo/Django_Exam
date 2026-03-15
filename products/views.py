@@ -52,3 +52,8 @@ def approved_products(request):
     paginator = Paginator(products, 10)
     page_obj = paginator.get_page(request.GET.get("page"))
     return render(request, "products/approved.html", {"page_obj": page_obj})
+
+
+def api_documentation(request):
+    """Serve API documentation"""
+    return render(request, "api_documentation.html")

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management System - Technical Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: #fff;
+            padding: 45px;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a5276, #2874a6);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .header .meta {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .section {
+            margin-bottom: 45px;
+        }
+
+        .section h2 {
+            color: #1a5276;
+            font-size: 1.7em;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .section h3 {
+            color: #2874a6;
+            font-size: 1.3em;
+            margin-top: 30px;
+            margin-bottom: 18px;
+        }
+
+        .project-info {
+            background: #e8f6f3;
+            border-left: 5px solid #1abc9c;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .real-world-box {
+            background: #fef9e7;
+            border: 2px solid #f39c12;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .real-world-box h4 {
+            color: #d68910;
+            margin-bottom: 12px;
+        }
+
+        .code-container {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .code-header {
+            background: #2d2d2d;
+            color: #ccc;
+            padding: 12px 20px;
+            font-size: 0.9em;
+            border-bottom: 1px solid #3d3d3d;
+            display: flex;
+            align-items: center;
+        }
+
+        .code-header .file-icon {
+            margin-right: 10px;
+        }
+
+        .code-content {
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .code-content .line {
+            display: flex;
+        }
+
+        .code-content .line-numbers {
+            color: #6a9955;
+            min-width: 40px;
+            user-select: none;
+            text-align: right;
+            padding-right: 20px;
+            opacity: 0.7;
+        }
+
+        .code-content .keyword {
+            color: #569cd6;
+        }
+
+        .code-content .string {
+            color: #ce9178;
+        }
+
+        .code-content .function {
+            color: #dcdcaa;
+        }
+
+        .code-content .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        .code-content .class {
+            color: #4ec9b0;
+        }
+
+        .code-content .method {
+            color: #dcdcaa;
+        }
+
+        .code-content .number {
+            color: #b5cea8;
+        }
+
+        .code-content .decorator {
+            color: #c586c0;
+        }
+
+        .endpoint-card {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            transition: transform 0.2s;
+        }
+
+        .endpoint-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .method-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.85em;
+            margin-right: 12px;
+        }
+
+        .method-tag.get {
+            background: #3498db;
+            color: white;
+        }
+
+        .method-tag.post {
+            background: #27ae60;
+            color: white;
+        }
+
+        .endpoint-url {
+            font-family: 'Consolas', monospace;
+            font-size: 1.1em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table th {
+            background: #1a5276;
+            color: white;
+            padding: 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .flow-number {
+            background: #3498db;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .flow-arrow {
+            color: #7f8c8d;
+            font-size: 1.5em;
+            margin: 0 10px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .tech-tag {
+            background: #e8f4f8;
+            border: 1px solid #3498db;
+            color: #1a5276;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .highlight-code {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #e9ecef;
+            color: #7f8c8d;
+        }
+
+        @media print {
+            body {
+                padding: 20px;
+            }
+
+            .code-container {
+                break-inside: avoid;
+            }
+
+            .endpoint-card {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>📦 Inventory Management System</h1>
+        <p>Backend API Technical Documentation</p>
+        <div class="meta">
+            <p>Django 5.2 | Python | SQLite/PostgreSQL</p>
+            <p>Prepared for Technical Review</p>
+        </div>
+    </div>
+
+    <!-- Project Overview -->
+    <div class="section">
+        <h2>1. Project Overview</h2>
+
+        <div class="project-info">
+            <h4>🎯 Project Purpose</h4>
+            <p>এটি একটি <strong>Product Inventory Management System</strong> যেখানে:</p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Bulk Excel upload দিয়ে product import করা যায়</li>
+                <li>Draft থেকে Approved workflow আছে</li>
+                <li>Search এবং Pagination সাপোর্ট করে</li>
+                <li>Real-time status tracking সম্ভব</li>
+            </ul>
+        </div>
+
+        <h3>Technology Stack:</h3>
+        <div class="tech-stack">
+            <span class="tech-tag">Django 5.2</span>
+            <span class="tech-tag">Python 3.11</span>
+            <span class="tech-tag">SQLite/PostgreSQL</span>
+            <span class="tech-tag">Pandas</span>
+            <span class="tech-tag">openpyxl</span>
+            <span class="tech-tag">HTML/CSS</span>
+        </div>
+    </div>
+
+    <!-- Database Model -->
+    <div class="section">
+        <h2>2. Database Design</h2>
+
+        <div class="real-world-box">
+            <h4>💡 Real World Context</h4>
+            <p>একটি inventory system এ product data সংরক্ষণ করতে হয়। প্রতিটি product এর unique ID, name, category,
+                price, quantity থাকে। Status field দিয়ে বুঝায় product এখনো draft অবস্থায় আছে নাকি approved হয়ে
+                inventory তে যোগ হয়েছে।</p>
+        </div>
+
+        <h3>File: products/models.py</h3>
+        <div class="code-container">
+            <div class="code-header">
+                <span class="file-icon">📄</span> products/models.py
+            </div>
+            <div class="code-content">
+                <div class="line"><span class="line-numbers">1</span><span class="keyword">from</span> django.db <span
+                        class="keyword">import</span> models</div>
+                <div class="line"><span class="line-numbers">2</span></div>
+                <div class="line"><span class="line-numbers">3</span></div>
+                <div class="line"><span class="line-numbers">4</span><span class="keyword">class</span> <span
+                        class="class">Product</span>(models.Model):</div>
+                <div class="line"><span class="line-numbers">5</span> <span class="comment"># Dropdown choices for
+                        status</span></div>
+                <div class="line"><span class="line-numbers">6</span> STATUS_CHOICES = [(<span
+                        class="string">"Draft"</span>, <span class="string">"Draft"</span>), (<span
+                        class="string">"Approved"</span>, <span class="string">"Approved"</span>)]</div>
+                <div class="line"><span class="line-numbers">7</span></div>
+                <div class="line"><span class="line-numbers">8</span> <span class="comment"># Core Fields - এগুলোই আসলে
+                        database এ column হবে</span></div>
+                <div class="line"><span class="line-numbers">9</span> product_id = models.IntegerField(<span
+                        class="keyword">unique</span>=<span class="keyword">True</span>) <span class="comment"># SKU
+                        number</span></div>
+                <div class="line"><span class="line-numbers">10</span> name = models.CharField(max_length=<span
+                        class="string">255</span>) <span class="comment"># Product name</span></div>
+                <div class="line"><span class="line-numbers">11</span> category = models.CharField(max_length=<span
+                        class="string">100</span>) <span class="comment"># Category name</span></div>
+                <div class="line"><span class="line-numbers">12</span> price = models.DecimalField(max_digits=<span
+                        class="string">10</span>, decimal_places=<span class="string">2</span>) <span class="comment">#
+                        Price with decimals</span></div>
+                <div class="line"><span class="line-numbers">13</span> quantity = models.IntegerField() <span
+                        class="comment"># Stock quantity</span></div>
+                <div class="line"><span class="line-numbers">14</span> last_updated =
+                    models.DateTimeField(auto_now=<span class="keyword">True</span>) <span class="comment"># Auto
+                        timestamp</span></div>
+                <div class="line"><span class="line-numbers">15</span> status = models.CharField(max_length=<span
+                        class="string">10</span>, choices=STATUS_CHOICES, default=<span class="string">"Draft"</span>)
+                </div>
+                <div class="line"><span class="line-numbers">16</span></div>
+                <div class="line"><span class="line-numbers">17</span> <span class="keyword">def</span> <span
+                        class="function">__str__</span>(self):</div>
+                <div class="line"><span class="line-numbers">18</span> <span class="keyword">return</span> self.name
+                    <span class="comment"># Admin panel এ দেখাবে</span></div>
+            </div>
+        </div>
+
+        <h3>Database Table Structure:</h3>
+        <table>
+            <tr>
+                <th>Field Name</th>
+                <th>Data Type</th>
+                <th>Purpose</th>
+                <th>Constraints</th>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>AutoField</td>
+                <td>Primary Key (auto)</td>
+                <td>Auto-increment</td>
+            </tr>
+            <tr>
+                <td>product_id</td>
+                <td>Integer</td>
+                <td>Unique SKU</td>
+                <td>Unique, Required</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>VARCHAR(255)</td>
+                <td>Product Name</td>
+                <td>Required</td>
+            </tr>
+            <tr>
+                <td>category</td>
+                <td>VARCHAR(100)</td>
+                <td>Category</td>
+                <td>Optional</td>
+            </tr>
+            <tr>
+                <td>price</td>
+                <td>Decimal(10,2)</td>
+                <td>Price in Taka</td>
+                <td>Required</td>
+            </tr>
+            <tr>
+                <td>quantity</td>
+                <td>Integer</td>
+                <td>Stock Count</td>
+                <td>Required</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>VARCHAR(10)</td>
+                <td>Draft/Approved</td>
+                <td>Default: Draft</td>
+            </tr>
+            <tr>
+                <td>last_updated</td>
+                <td>DateTime</td>
+                <td>Auto-updated time</td>
+                <td>Auto_now=True</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- API Endpoints -->
+    <div class="section">
+        <h2>3. API Endpoints</h2>
+
+        <p>নিচে প্রতিটি API এর detailed implementation দেওয়া হলো:</p>
+
+        <!-- Endpoint 1 -->
+        <div class="endpoint-card">
+            <h3>API #1: Excel Upload & Draft Management</h3>
+            <div style="margin: 15px 0;">
+                <span class="method-tag get">GET</span>
+                <span class="method-tag post">POST</span>
+                <span class="endpoint-url">/ (Root URL)</span>
+            </div>
+
+            <div class="real-world-box">
+                <h4>📋 কখন ব্যবহার করবেন:</h4>
+                <p>যখন নতুন products bulk upload করতে হবে Excel file থেকে। যেমন: Excel file এ ১০০০ product আছে, সব
+                    একসাথে import করতে চাই।</p>
+            </div>
+
+            <h4>Expected Excel Format:</h4>
+            <table>
+                <tr>
+                    <th>product_id</th>
+                    <th>name</th>
+                    <th>category</th>
+                    <th>price</th>
+                    <th>quantity</th>
+                </tr>
+                <tr>
+                    <td>1001</td>
+                    <td>Smartphone X</td>
+                    <td>Electronics</td>
+                    <td>25000.00</td>
+                    <td>50</td>
+                </tr>
+                <tr>
+                    <td>1002</td>
+                    <td>Cotton Shirt</td>
+                    <td>Clothing</td>
+                    <td>1200.00</td>
+                    <td>200</td>
+                </tr>
+            </table>
+
+            <h4>Backend Code:</h4>
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="file-icon">📄</span> products/views.py
+                </div>
+                <div class="code-content">
+                    <div class="line"><span class="line-numbers"> 1</span><span class="keyword">import</span> pandas
+                        <span class="keyword">as</span> pd <span class="comment"># Excel পড়ার জন্য</span></div>
+                    <div class="line"><span class="line-numbers"> 2</span><span class="keyword">from</span>
+                        django.shortcuts <span class="keyword">import</span> render</div>
+                    <div class="line"><span class="line-numbers"> 3</span><span class="keyword">from</span>
+                        django.contrib <span class="keyword">import</span> messages <span class="comment">#
+                            Success/Error message</span></div>
+                    <div class="line"><span class="line-numbers"> 4</span><span class="keyword">from</span>
+                        django.core.paginator <span class="keyword">import</span> Paginator</div>
+                    <div class="line"><span class="line-numbers"> 5</span><span class="keyword">from</span> .models
+                        <span class="keyword">import</span> Product</div>
+                    <div class="line"><span class="line-numbers"> 6</span></div>
+                    <div class="line"><span class="line-numbers"> 7</span></div>
+                    <div class="line"><span class="line-numbers"> 8</span><span class="keyword">def</span> <span
+                            class="function">upload_and_drafts</span>(request):</div>
+                    <div class="line"><span class="line-numbers"> 9</span> <span class="comment">#
+                            ─────────────────────────────────────────────</span></div>
+                    <div class="line"><span class="line-numbers">10</span> <span class="comment"># PART 1: Handle POST -
+                            Excel Upload</span></div>
+                    <div class="line"><span class="line-numbers">11</span> <span class="comment">#
+                            ─────────────────────────────────────────────</span></div>
+                    <div class="line"><span class="line-numbers">12</span> <span class="keyword">if</span>
+                        request.method == <span class="string">"POST"</span> <span class="keyword">and</span>
+                        request.FILES.get(<span class="string">"excel_file"</span>):</div>
+                    <div class="line"><span class="line-numbers">13</span> file = request.FILES[<span
+                            class="string">"excel_file"</span>] <span class="comment"># Uploaded file</span></div>
+                    <div class="line"><span class="line-numbers">14</span> </div>
+                    <div class="line"><span class="line-numbers">15</span> <span class="keyword">try</span>:</div>
+                    <div class="line"><span class="line-numbers">16</span> <span class="comment"># Step 1: Excel parse
+                            করা pandas দিয়ে</span></div>
+                    <div class="line"><span class="line-numbers">17</span> df = pd.read_excel(file) </div>
+                    <div class="line"><span class="line-numbers">18</span> </div>
+                    <div class="line"><span class="line-numbers">19</span> <span class="comment"># Step 2: প্রতিটি row
+                            তে loop চালানো</span></div>
+                    <div class="line"><span class="line-numbers">20</span> <span class="keyword">for</span> _, row <span
+                            class="keyword">in</span> df.iterrows():</div>
+                    <div class="line"><span class="line-numbers">21</span> <span class="comment"># Step 3: Update বা
+                            Create করা</span></div>
+                    <div class="line"><span class="line-numbers">22</span> <span class="comment"># যদি product_id আগে
+                            থাকে → update হবে</span></div>
+                    <div class="line"><span class="line-numbers">23</span> <span class="comment"># যদি না থাকে → নতুন
+                            create হবে</span></div>
+                    <div class="line"><span class="line-numbers">24</span> Product.objects.update_or_create(</div>
+                    <div class="line"><span class="line-numbers">25</span> product_id=row[<span
+                            class="string">"product_id"</span>], <span class="comment"># Search key</span></div>
+                    <div class="line"><span class="line-numbers">26</span> defaults={ <span class="comment"># Values to
+                            set</span></div>
+                    <div class="line"><span class="line-numbers">27</span> <span class="string">"name"</span>: row[<span
+                            class="string">"name"</span>],</div>
+                    <div class="line"><span class="line-numbers">28</span> <span class="string">"category"</span>:
+                        row[<span class="string">"category"</span>],</div>
+                    <div class="line"><span class="line-numbers">29</span> <span class="string">"price"</span>:
+                        row[<span class="string">"price"</span>],</div>
+                    <div class="line"><span class="line-numbers">30</span> <span class="string">"quantity"</span>:
+                        row[<span class="string">"quantity"</span>],</div>
+                    <div class="line"><span class="line-numbers">31</span> <span class="string">"status"</span>: <span
+                            class="string">"Draft"</span>, <span class="comment"># Default status</span></div>
+                    <div class="line"><span class="line-numbers">32</span> },</div>
+                    <div class="line"><span class="line-numbers">33</span> )</div>
+                    <div class="line"><span class="line-numbers">34</span> </div>
+                    <div class="line"><span class="line-numbers">35</span> </div>
+                    <div class="line"><span class="line-numbers">36</span> <span class="comment"># Step 4: Success
+                            message দেখানো</span></div>
+                    <div class="line"><span class="line-numbers">37</span> messages.success(request, <span
+                            class="string">"Excel uploaded successfully!"</span>)</div>
+                    <div class="line"><span class="line-numbers">38</span> </div>
+                    <div class="line"><span class="line-numbers">39</span> <span class="keyword">except</span> Exception
+                        <span class="keyword">as</span> e:</div>
+                    <div class="line"><span class="line-numbers">40</span> messages.error(request, <span
+                            class="string">f"Error: {e}"</span>)</div>
+                    <div class="line"><span class="line-numbers">41</span> </div>
+                    <div class="line"><span class="line-numbers">42</span> <span class="keyword">return</span>
+                        redirect(<span class="string">"upload_and_drafts"</span>)</div>
+                    <div class="line"><span class="line-numbers">43</span> </div>
+                    <div class="line"><span class="line-numbers">44</span> </div>
+                    <div class="line"><span class="line-numbers">45</span> <span class="comment">#
+                            ─────────────────────────────────────────────</span></div>
+                    <div class="line"><span class="line-numbers">46</span> <span class="comment"># PART 2: Handle GET -
+                            Show Drafts</span></div>
+                    <div class="line"><span class="line-numbers">47</span> <span class="comment">#
+                            ─────────────────────────────────────────────</span></div>
+                    <div class="line"><span class="line-numbers">48</span> <span class="comment"># শুধু Draft status এর
+                            products নেওয়া</span></div>
+                    <div class="line"><span class="line-numbers">49</span> draft_list = Product.objects.filter(</div>
+                    <div class="line"><span class="line-numbers">50</span> status=<span class="string">"Draft"</span>
+                    </div>
+                    <div class="line"><span class="line-numbers">51</span> ).order_by(<span
+                            class="string">"-last_updated"</span>) <span class="comment"># নতুন আগে</span></div>
+                    <div class="line"><span class="line-numbers">52</span> </div>
+                    <div class="line"><span class="line-numbers">53</span> <span class="comment"># Pagination: ১০টি করে
+                            দেখানো</span></div>
+                    <div class="line"><span class="line-numbers">54</span> paginator = Paginator(draft_list, <span
+                            class="number">10</span>)</div>
+                    <div class="line"><span class="line-numbers">55</span> page_obj =
+                        paginator.get_page(request.GET.get(<span class="string">"page"</span>))</div>
+                    <div class="line"><span class="line-numbers">56</span> </div>
+                    <div class="line"><span class="line-numbers">57</span> <span class="comment"># Template এ
+                            পাঠানো</span></div>
+                    <div class="line"><span class="line-numbers">58</span> <span class="keyword">return</span>
+                        render(request, <span class="string">"products/drafts.html"</span>, {</div>
+                    <div class="line"><span class="line-numbers">59</span> <span class="string">"page_obj"</span>:
+                        page_obj</div>
+                    <div class="line"><span class="line-numbers">60</span> })</div>
+                </div>
+            </div>
+
+            <h4>কিভাবে কাজ করে (Step by Step):</h4>
+            <div class="flow-step">
+                <span class="flow-number">1</span>
+                <span>User Excel file select করে upload button চাপে</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-number">2</span>
+                <span>Django request.FILES থেকে file নেয়</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-number">3</span>
+                <span>Pandas library Excel parse করে DataFrame এ</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-number">4</span>
+                <span>প্রতিটি row তে loop চালিয়ে database এ save করে</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-number">5</span>
+                <span>সব products "Draft" status পায়</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-number">6</span>
+                <span>Drafts page এ redirect করে + success message</span>
+            </div>
+        </div>
+
+        <!-- Endpoint 2 -->
+        <div class="endpoint-card">
+            <h3>API #2: Approve Single Product</h3>
+            <div style="margin: 15px 0;">
+                <span class="method-tag post">POST</span>
+                <span class="endpoint-url">/approve/<product_id>/</span>
+            </div>
+
+            <div class="real-world-box">
+                <h4>📋 কখন ব্যবহার করবেন:</h4>
+                <p>যখন একটি নির্দিষ্ট product review করে approve করতে হবে। যেমন: Manager দেখল product এর তথ্য ঠিক আছে,
+                    তারপর approve button চাপলেন।</p>
+            </div>
+
+            <h4>Backend Code:</h4>
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="file-icon">📄</span> products/views.py
+                </div>
+                <div class="code-content">
+                    <div class="line"><span class="line-numbers">61</span><span class="keyword">from</span>
+                        django.shortcuts <span class="keyword">import</span> get_object_or_404</div>
+                    <div class="line"><span class="line-numbers">62</span></div>
+                    <div class="line"><span class="line-numbers">63</span></div>
+                    <div class="line"><span class="line-numbers">64</span><span class="keyword">def</span> <span
+                            class="function">approve_product</span>(request, pk):</div>
+                    <div class="line"><span class="line-numbers">65</span> <span class="comment"># Step 1: URL থেকে
+                            product id পাওয়া (pk=1, 2, 3...)</span></div>
+                    <div class="line"><span class="line-numbers">66</span> <span class="comment"># get_object_or_404 =
+                            খুঁজে না পেলে 404 error দেয়</span></div>
+                    <div class="line"><span class
