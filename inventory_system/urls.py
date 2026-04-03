@@ -16,9 +16,24 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+@api_view(['GET'])
+def api_root(request):
+    return Response({
+        'message': 'Inventory System API',
+        'endpoints': {
+            'products': '/api/products/',
+            'upload_excel': '/api/products/upload_excel/',
+            'drafts': '/api/products/drafts/',
+            'approved': '/api/products/approved/',
+        }
+    })
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('',include('products.urls'))
+    path('api/', api_root, name='api-root'),
+    path('', include('products.urls'))
 ]

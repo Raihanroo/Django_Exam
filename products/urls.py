@@ -1,9 +1,10 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
 
+router = DefaultRouter()
+router.register(r"products", views.ProductViewSet, basename="product")
+
 urlpatterns = [
-    path("", views.upload_and_drafts, name="upload_and_drafts"),
-    path("approve/<int:pk>/", views.approve_product, name="approve_product"),
-    path("approved/", views.approved_products, name="approved_products"),
-    path("docs/", views.api_documentation, name="api_documentation"),
+    path("api/", include(router.urls)),
 ]
