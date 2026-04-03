@@ -17,6 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -35,5 +36,6 @@ def api_root(request):
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/', api_root, name='api-root'),
-    path('', include('products.urls'))
+    path('', RedirectView.as_view(url='/api/products/', permanent=False)),
+    path('api/', include('products.urls'))
 ]
