@@ -3,6 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.shortcuts import render
 from django.db.models import Q
 from .models import Product
 from .serializers import ProductSerializer
@@ -157,3 +158,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         
         serializer = self.get_serializer(approved, many=True)
         return Response(serializer.data)
+
+
+def dashboard(request):
+    """Render dashboard UI"""
+    return render(request, 'dashboard.html')

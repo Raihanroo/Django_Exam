@@ -7,4 +7,5 @@ router.register(r"products", views.ProductViewSet, basename="product")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("dashboard/", views.dashboard, name="dashboard"),
 ]
