@@ -4,336 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
+            background-color: #f8f9fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        header {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        header h1 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            padding: 12px 25px;
-            border: none;
-            background: white;
-            color: #667eea;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .tab-btn.active {
-            background: #667eea;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .tab-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .tab-content {
-            display: none;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .upload-section {
-            text-align: center;
-            padding: 40px;
-            border: 2px dashed #667eea;
-            border-radius: 10px;
-            background: #f8f9ff;
-        }
-
-        .upload-section h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-        }
-
-        .file-input-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        .file-input-wrapper input[type="file"] {
-            display: none;
-        }
-
-        .file-label {
-            display: inline-block;
-            padding: 15px 30px;
-            background: #667eea;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .file-label:hover {
-            background: #764ba2;
-            transform: scale(1.05);
-        }
-
-        .file-name {
-            margin-top: 10px;
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        .upload-btn {
-            padding: 12px 30px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1em;
-            transition: all 0.3s;
-            margin-left: 10px;
-        }
-
-        .upload-btn:hover {
-            background: #218838;
-            transform: scale(1.05);
-        }
-
-        .upload-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: scale(1);
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .product-card {
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            border-radius: 8px;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-
-        .product-card.draft {
-            border-left-color: #ffc107;
-        }
-
-        .product-card.approved {
-            border-left-color: #28a745;
-        }
-
-        .product-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 15px;
-        }
-
-        .product-id {
+        .navbar-brand {
             font-weight: 700;
-            color: #667eea;
-            font-size: 1.2em;
+            font-size: 1.5em;
         }
-
-        .status-badge {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
+        .container-main {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            margin-bottom: 30px;
         }
-
-        .status-badge.draft {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .status-badge.approved {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .product-name {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .product-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-            font-size: 0.95em;
-        }
-
-        .detail-item {
-            color: #666;
-        }
-
-        .detail-label {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .approve-btn {
-            flex: 1;
-            padding: 10px;
-            background: #28a745;
+        .table thead {
+            background-color: #343a40;
             color: white;
+        }
+        .btn-approve {
+            background-color: #ffc107;
+            color: black;
+            font-weight: bold;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
         }
-
-        .approve-btn:hover {
-            background: #218838;
+        .btn-approve:hover {
+            background-color: #e0a800;
         }
-
-        .approve-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        .delete-btn {
-            flex: 1;
-            padding: 10px;
-            background: #dc3545;
+        .upload-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
         }
-
-        .delete-btn:hover {
-            background: #c82333;
-        }
-
-        .message {
-            padding: 15px;
-            border-radius: 5px;
+        .upload-section h3 {
             margin-bottom: 20px;
+        }
+        .upload-section input[type="file"] {
+            background: white;
+            color: #333;
+        }
+        .upload-section .btn {
             font-weight: 600;
         }
-
-        .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #667eea;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .stats {
+        .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-
         .stat-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -341,138 +69,146 @@
             border-radius: 10px;
             text-align: center;
         }
-
         .stat-number {
             font-size: 2.5em;
             font-weight: 700;
             margin-bottom: 10px;
         }
-
         .stat-label {
             font-size: 1em;
             opacity: 0.9;
         }
-
+        .alert {
+            margin-bottom: 20px;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        .spinner-border {
+            color: #667eea;
+        }
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             color: #999;
         }
-
         .empty-state-icon {
             font-size: 4em;
             margin-bottom: 20px;
         }
-
-        .empty-state-text {
-            font-size: 1.2em;
-            margin-bottom: 10px;
+        .tab-content {
+            display: none;
         }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8em;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .tabs {
-                flex-direction: column;
-            }
-
-            .tab-btn {
-                width: 100%;
-            }
+        .tab-content.active {
+            display: block;
+        }
+        .nav-tabs .nav-link {
+            color: #667eea;
+            font-weight: 600;
+            border: none;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-tabs .nav-link.active {
+            color: #667eea;
+            background-color: transparent;
+            border-bottom: 3px solid #667eea;
+        }
+        .nav-tabs .nav-link:hover {
+            border-bottom: 3px solid #667eea;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📦 Inventory Management System</h1>
-            <p>Manage your products efficiently with Excel import and approval workflow</p>
-        </header>
-
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('dashboard')">Dashboard</button>
-            <button class="tab-btn" onclick="switchTab('upload')">Upload Excel</button>
-            <button class="tab-btn" onclick="switchTab('drafts')">Draft Products</button>
-            <button class="tab-btn" onclick="switchTab('approved')">Approved Products</button>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand">📦 Inventory Management System</span>
         </div>
+    </nav>
 
-        <!-- Dashboard Tab -->
-        <div id="dashboard" class="tab-content active">
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number" id="total-count">0</div>
-                    <div class="stat-label">Total Products</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="draft-count">0</div>
-                    <div class="stat-label">Draft Products</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="approved-count">0</div>
-                    <div class="stat-label">Approved Products</div>
-                </div>
+    <div class="container-main">
+        <!-- Stats -->
+        <div class="stats-row" id="stats-container">
+            <div class="stat-card">
+                <div class="stat-number" id="total-count">0</div>
+                <div class="stat-label">Total Products</div>
             </div>
-            <div id="dashboard-content"></div>
+            <div class="stat-card">
+                <div class="stat-number" id="draft-count">0</div>
+                <div class="stat-label">Draft Products</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="approved-count">0</div>
+                <div class="stat-label">Approved Products</div>
+            </div>
         </div>
+
+        <!-- Messages -->
+        <div id="messages-container"></div>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-4" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload" type="button" role="tab">📤 Upload Excel</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="drafts-tab" data-bs-toggle="tab" data-bs-target="#drafts" type="button" role="tab">📋 Draft Products</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="approved-tab" data-bs-toggle="tab" data-bs-target="#approved" type="button" role="tab">✅ Approved Products</button>
+            </li>
+        </ul>
 
         <!-- Upload Tab -->
-        <div id="upload" class="tab-content">
+        <div class="tab-content active" id="upload" role="tabpanel">
             <div class="upload-section">
-                <h2>📤 Upload Products from Excel</h2>
-                <p style="color: #666; margin-bottom: 20px;">Upload an Excel file with columns: product_id, name, category, price, quantity</p>
+                <h3>📤 Upload Products from Excel</h3>
+                <p>Upload an Excel file with columns: product_id, name, category, price, quantity</p>
                 
-                <div class="file-input-wrapper">
-                    <input type="file" id="excel-file" accept=".xlsx,.xls" onchange="updateFileName()">
-                    <label for="excel-file" class="file-label">Choose Excel File</label>
-                    <div class="file-name" id="file-name"></div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <input type="file" id="excel-file" class="form-control" accept=".xlsx,.xls" onchange="updateFileName()">
+                        <small id="file-name" class="text-white mt-2 d-block"></small>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-light w-100" onclick="uploadExcel()" id="upload-btn">Upload</button>
+                    </div>
                 </div>
-
-                <button class="upload-btn" onclick="uploadExcel()" id="upload-btn">Upload</button>
-
-                <div id="upload-message" style="margin-top: 20px;"></div>
             </div>
         </div>
 
         <!-- Drafts Tab -->
-        <div id="drafts" class="tab-content">
-            <h2>📋 Draft Products</h2>
-            <div id="drafts-content"></div>
+        <div class="tab-content" id="drafts" role="tabpanel">
+            <h3 class="mb-4">📋 Draft Products</h3>
+            <div id="drafts-content" class="loading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Loading draft products...</p>
+            </div>
         </div>
 
         <!-- Approved Tab -->
-        <div id="approved" class="tab-content">
-            <h2>✅ Approved Products</h2>
-            <div id="approved-content"></div>
+        <div class="tab-content" id="approved" role="tabpanel">
+            <h3 class="mb-4">✅ Approved Products</h3>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <input type="text" id="search-input" class="form-control" placeholder="Search by name or category..." onkeyup="searchApproved()">
+                </div>
+            </div>
+            <div id="approved-content" class="loading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Loading approved products...</p>
+            </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const API_BASE = '/api/products';
-
-        function switchTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show selected tab
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-
-            // Load data
-            if (tabName === 'dashboard') loadDashboard();
-            if (tabName === 'drafts') loadDrafts();
-            if (tabName === 'approved') loadApproved();
-        }
+        let allApprovedProducts = [];
 
         function updateFileName() {
             const file = document.getElementById('excel-file').files[0];
@@ -484,7 +220,7 @@
         async function uploadExcel() {
             const file = document.getElementById('excel-file').files[0];
             if (!file) {
-                showMessage('Please select a file', 'error', 'upload-message');
+                showMessage('Please select a file', 'danger');
                 return;
             }
 
@@ -492,6 +228,7 @@
             formData.append('excel_file', file);
 
             document.getElementById('upload-btn').disabled = true;
+            document.getElementById('upload-btn').innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Uploading...';
 
             try {
                 const response = await fetch(`${API_BASE}/upload_excel/`, {
@@ -502,21 +239,25 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    showMessage(data.message, 'success', 'upload-message');
+                    showMessage(data.message, 'success');
                     document.getElementById('excel-file').value = '';
                     document.getElementById('file-name').textContent = '';
-                    setTimeout(() => loadDashboard(), 1000);
+                    setTimeout(() => {
+                        loadStats();
+                        loadDrafts();
+                    }, 1000);
                 } else {
-                    showMessage(data.error || 'Upload failed', 'error', 'upload-message');
+                    showMessage(data.error || 'Upload failed', 'danger');
                 }
             } catch (error) {
-                showMessage('Error: ' + error.message, 'error', 'upload-message');
+                showMessage('Error: ' + error.message, 'danger');
             } finally {
                 document.getElementById('upload-btn').disabled = false;
+                document.getElementById('upload-btn').innerHTML = 'Upload';
             }
         }
 
-        async function loadDashboard() {
+        async function loadStats() {
             try {
                 const response = await fetch(`${API_BASE}/?limit=1000`);
                 const data = await response.json();
@@ -529,107 +270,134 @@
                 document.getElementById('total-count').textContent = total;
                 document.getElementById('draft-count').textContent = drafts;
                 document.getElementById('approved-count').textContent = approved;
-
-                const recentProducts = products.slice(0, 6);
-                let html = '<h3 style="margin-top: 30px; margin-bottom: 20px;">Recent Products</h3>';
-                
-                if (recentProducts.length === 0) {
-                    html += '<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">No products yet</div></div>';
-                } else {
-                    html += '<div class="products-grid">';
-                    recentProducts.forEach(product => {
-                        html += createProductCard(product);
-                    });
-                    html += '</div>';
-                }
-
-                document.getElementById('dashboard-content').innerHTML = html;
             } catch (error) {
-                console.error('Error loading dashboard:', error);
+                console.error('Error loading stats:', error);
             }
         }
 
         async function loadDrafts() {
             try {
-                const response = await fetch(`${API_BASE}/drafts/`);
+                const response = await fetch(`${API_BASE}/drafts/?limit=1000`);
                 const data = await response.json();
                 const products = data.results || data;
 
-                let html = '<div class="products-grid">';
+                let html = '';
                 
                 if (products.length === 0) {
-                    html = '<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">No draft products</div></div>';
+                    html = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No draft products</p></div>';
                 } else {
+                    html = `
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped align-middle text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Product ID</th>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Last Updated</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                    `;
+                    
                     products.forEach(product => {
-                        html += createProductCard(product);
+                        html += `
+                            <tr>
+                                <td>${product.product_id}</td>
+                                <td>${product.name}</td>
+                                <td>${product.category}</td>
+                                <td>$${parseFloat(product.price).toFixed(2)}</td>
+                                <td>${product.quantity}</td>
+                                <td>${new Date(product.last_updated).toLocaleDateString()}</td>
+                                <td>
+                                    <button class="btn btn-approve btn-sm px-3" onclick="approveProduct(${product.id})">Approve</button>
+                                </td>
+                            </tr>
+                        `;
                     });
-                    html += '</div>';
+                    
+                    html += `
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
                 }
 
                 document.getElementById('drafts-content').innerHTML = html;
             } catch (error) {
                 console.error('Error loading drafts:', error);
+                document.getElementById('drafts-content').innerHTML = '<div class="alert alert-danger">Error loading drafts</div>';
             }
         }
 
         async function loadApproved() {
             try {
-                const response = await fetch(`${API_BASE}/approved/`);
+                const response = await fetch(`${API_BASE}/approved/?limit=1000`);
                 const data = await response.json();
-                const products = data.results || data;
+                allApprovedProducts = data.results || data;
 
-                let html = '<div class="products-grid">';
-                
-                if (products.length === 0) {
-                    html = '<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">No approved products</div></div>';
-                } else {
-                    products.forEach(product => {
-                        html += createProductCard(product);
-                    });
-                    html += '</div>';
-                }
-
-                document.getElementById('approved-content').innerHTML = html;
+                displayApprovedProducts(allApprovedProducts);
             } catch (error) {
                 console.error('Error loading approved:', error);
+                document.getElementById('approved-content').innerHTML = '<div class="alert alert-danger">Error loading approved products</div>';
             }
         }
 
-        function createProductCard(product) {
-            const statusClass = product.status === 'Draft' ? 'draft' : 'approved';
-            const isApproved = product.status === 'Approved';
+        function displayApprovedProducts(products) {
+            let html = '';
+            
+            if (products.length === 0) {
+                html = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No approved products</p></div>';
+            } else {
+                html = `
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover text-center align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Product ID</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Last Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                products.forEach(product => {
+                    html += `
+                        <tr>
+                            <td>${product.product_id}</td>
+                            <td>${product.name}</td>
+                            <td>${product.category}</td>
+                            <td>$${parseFloat(product.price).toFixed(2)}</td>
+                            <td>${product.quantity}</td>
+                            <td>${new Date(product.last_updated).toLocaleDateString()}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
 
-            return `
-                <div class="product-card ${statusClass}">
-                    <div class="product-header">
-                        <div class="product-id">#${product.product_id}</div>
-                        <span class="status-badge ${statusClass}">${product.status}</span>
-                    </div>
-                    <div class="product-name">${product.name}</div>
-                    <div class="product-details">
-                        <div class="detail-item">
-                            <div class="detail-label">Category</div>
-                            <div>${product.category}</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Price</div>
-                            <div>$${parseFloat(product.price).toFixed(2)}</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Quantity</div>
-                            <div>${product.quantity} units</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Updated</div>
-                            <div>${new Date(product.last_updated).toLocaleDateString()}</div>
-                        </div>
-                    </div>
-                    <div class="product-actions">
-                        ${!isApproved ? `<button class="approve-btn" onclick="approveProduct(${product.id})">Approve</button>` : ''}
-                        <button class="delete-btn" onclick="deleteProduct(${product.id})">Delete</button>
-                    </div>
-                </div>
-            `;
+            document.getElementById('approved-content').innerHTML = html;
+        }
+
+        function searchApproved() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filtered = allApprovedProducts.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.category.toLowerCase().includes(query)
+            );
+            displayApprovedProducts(filtered);
         }
 
         async function approveProduct(id) {
@@ -639,48 +407,40 @@
                 });
 
                 if (response.ok) {
-                    showMessage('Product approved successfully!', 'success', 'drafts-content');
-                    setTimeout(() => loadDrafts(), 500);
+                    showMessage('Product approved successfully!', 'success');
+                    setTimeout(() => {
+                        loadStats();
+                        loadDrafts();
+                        loadApproved();
+                    }, 500);
                 } else {
-                    showMessage('Failed to approve product', 'error', 'drafts-content');
+                    showMessage('Failed to approve product', 'danger');
                 }
             } catch (error) {
-                showMessage('Error: ' + error.message, 'error', 'drafts-content');
+                showMessage('Error: ' + error.message, 'danger');
             }
         }
 
-        async function deleteProduct(id) {
-            if (!confirm('Are you sure you want to delete this product?')) return;
-
-            try {
-                const response = await fetch(`${API_BASE}/${id}/`, {
-                    method: 'DELETE'
-                });
-
-                if (response.ok) {
-                    showMessage('Product deleted successfully!', 'success');
-                    setTimeout(() => loadDashboard(), 500);
-                } else {
-                    showMessage('Failed to delete product', 'error');
-                }
-            } catch (error) {
-                showMessage('Error: ' + error.message, 'error');
-            }
+        function showMessage(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            const container = document.getElementById('messages-container');
+            container.insertBefore(alertDiv, container.firstChild);
+            
+            setTimeout(() => alertDiv.remove(), 5000);
         }
 
-        function showMessage(message, type, elementId = 'dashboard-content') {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${type}`;
-            messageDiv.textContent = message;
-            
-            const element = document.getElementById(elementId);
-            element.insertBefore(messageDiv, element.firstChild);
-            
-            setTimeout(() => messageDiv.remove(), 5000);
-        }
+        // Tab switching
+        document.getElementById('drafts-tab').addEventListener('click', loadDrafts);
+        document.getElementById('approved-tab').addEventListener('click', loadApproved);
 
-        // Load dashboard on page load
-        window.addEventListener('load', loadDashboard);
+        // Load stats on page load
+        window.addEventListener('load', loadStats);
     </script>
 </body>
 </html>
