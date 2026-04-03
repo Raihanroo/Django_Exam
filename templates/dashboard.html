@@ -3,99 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory Management System</title>
+    <title>Upload Excel & Manage Drafts</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5em;
-        }
-        .container-main {
+        .container {
             background: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-top: 30px;
-            margin-bottom: 30px;
+            margin-top: 50px;
+            margin-bottom: 50px;
         }
-        .table thead {
-            background-color: #343a40;
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 600;
+        }
+        .upload-section {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .upload-section input[type="file"] {
+            flex: 1;
+            min-width: 200px;
+        }
+        .upload-section .btn {
+            font-weight: 600;
+            padding: 8px 20px;
+        }
+        .btn-upload {
+            background-color: #007bff;
             color: white;
+            border: none;
+        }
+        .btn-upload:hover {
+            background-color: #0056b3;
+        }
+        .btn-approved {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+        .btn-approved:hover {
+            background-color: #218838;
         }
         .btn-approve {
             background-color: #ffc107;
             color: black;
             font-weight: bold;
             border: none;
+            padding: 6px 15px;
+            font-size: 0.9em;
         }
         .btn-approve:hover {
             background-color: #e0a800;
         }
-        .upload-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        .upload-section h3 {
-            margin-bottom: 20px;
-        }
-        .upload-section input[type="file"] {
-            background: white;
-            color: #333;
-        }
-        .upload-section .btn {
-            font-weight: 600;
-        }
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        .stat-label {
-            font-size: 1em;
-            opacity: 0.9;
-        }
         .alert {
             margin-bottom: 20px;
         }
-        .loading {
-            text-align: center;
-            padding: 40px;
+        .table {
+            margin-top: 20px;
         }
-        .spinner-border {
-            color: #667eea;
+        .table thead {
+            background-color: #343a40;
+            color: white;
+        }
+        .table tbody tr {
+            vertical-align: middle;
+        }
+        .table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+        h3 {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 600;
+        }
+        .pagination {
+            margin-top: 20px;
         }
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             color: #999;
         }
-        .empty-state-icon {
-            font-size: 4em;
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        .spinner-border {
+            color: #007bff;
+        }
+        .nav-tabs {
+            border-bottom: 2px solid #dee2e6;
             margin-bottom: 20px;
+        }
+        .nav-tabs .nav-link {
+            color: #666;
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding: 10px 20px;
+            font-weight: 600;
+        }
+        .nav-tabs .nav-link.active {
+            color: #007bff;
+            background-color: transparent;
+            border-bottom: 3px solid #007bff;
+        }
+        .nav-tabs .nav-link:hover {
+            color: #007bff;
         }
         .tab-content {
             display: none;
@@ -103,105 +131,57 @@
         .tab-content.active {
             display: block;
         }
-        .nav-tabs .nav-link {
-            color: #667eea;
-            font-weight: 600;
-            border: none;
-            border-bottom: 3px solid transparent;
-        }
-        .nav-tabs .nav-link.active {
-            color: #667eea;
-            background-color: transparent;
-            border-bottom: 3px solid #667eea;
-        }
-        .nav-tabs .nav-link:hover {
-            border-bottom: 3px solid #667eea;
-        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <span class="navbar-brand">📦 Inventory Management System</span>
-        </div>
-    </nav>
-
-    <div class="container-main">
-        <!-- Stats -->
-        <div class="stats-row" id="stats-container">
-            <div class="stat-card">
-                <div class="stat-number" id="total-count">0</div>
-                <div class="stat-label">Total Products</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="draft-count">0</div>
-                <div class="stat-label">Draft Products</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="approved-count">0</div>
-                <div class="stat-label">Approved Products</div>
-            </div>
-        </div>
+    <div class="container">
+        <h1>Upload Excel & Manage Drafts</h1>
 
         <!-- Messages -->
         <div id="messages-container"></div>
 
-        <!-- Tabs -->
-        <ul class="nav nav-tabs mb-4" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload" type="button" role="tab">📤 Upload Excel</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="drafts-tab" data-bs-toggle="tab" data-bs-target="#drafts" type="button" role="tab">📋 Draft Products</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="approved-tab" data-bs-toggle="tab" data-bs-target="#approved" type="button" role="tab">✅ Approved Products</button>
-            </li>
-        </ul>
-
-        <!-- Upload Tab -->
-        <div class="tab-content active" id="upload" role="tabpanel">
-            <div class="upload-section">
-                <h3>📤 Upload Products from Excel</h3>
-                <p>Upload an Excel file with columns: product_id, name, category, price, quantity</p>
-                
-                <div class="row">
-                    <div class="col-md-8">
-                        <input type="file" id="excel-file" class="form-control" accept=".xlsx,.xls" onchange="updateFileName()">
-                        <small id="file-name" class="text-white mt-2 d-block"></small>
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-light w-100" onclick="uploadExcel()" id="upload-btn">Upload</button>
-                    </div>
-                </div>
-            </div>
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <input type="file" id="excel-file" class="form-control" accept=".xlsx,.xls" onchange="updateFileName()">
+            <button class="btn btn-upload" onclick="uploadExcel()" id="upload-btn">Upload Excel</button>
+            <button class="btn btn-approved" onclick="goToApproved()">View Approved Products</button>
         </div>
 
-        <!-- Drafts Tab -->
-        <div class="tab-content" id="drafts" role="tabpanel">
-            <h3 class="mb-4">📋 Draft Products</h3>
-            <div id="drafts-content" class="loading">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                <p>Loading draft products...</p>
+        <!-- Draft Products Section -->
+        <h3>Draft Products List</h3>
+        <div id="drafts-content" class="loading">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
+            <p>Loading draft products...</p>
         </div>
 
-        <!-- Approved Tab -->
-        <div class="tab-content" id="approved" role="tabpanel">
-            <h3 class="mb-4">✅ Approved Products</h3>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <input type="text" id="search-input" class="form-control" placeholder="Search by name or category..." onkeyup="searchApproved()">
-                </div>
+        <!-- Pagination -->
+        <nav id="pagination-container"></nav>
+    </div>
+
+    <!-- Approved Products Modal/Page -->
+    <div id="approved-page" style="display: none;">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1>Approved Products List</h1>
+                <button class="btn btn-secondary" onclick="goToDrafts()">← Back to Upload</button>
             </div>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <input type="text" id="search-input" class="form-control" placeholder="Search by name or category..." onkeyup="searchApproved()" style="max-width: 500px;">
+                <button class="btn btn-dark" onclick="searchApproved()">Search</button>
+            </div>
+
             <div id="approved-content" class="loading">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 <p>Loading approved products...</p>
             </div>
+
+            <!-- Pagination for Approved -->
+            <nav id="approved-pagination-container"></nav>
         </div>
     </div>
 
@@ -209,11 +189,13 @@
     <script>
         const API_BASE = '/api/products';
         let allApprovedProducts = [];
+        let currentPage = 1;
+        let draftProducts = [];
 
         function updateFileName() {
             const file = document.getElementById('excel-file').files[0];
             if (file) {
-                document.getElementById('file-name').textContent = `Selected: ${file.name}`;
+                console.log('File selected:', file.name);
             }
         }
 
@@ -241,9 +223,7 @@
                 if (response.ok) {
                     showMessage(data.message, 'success');
                     document.getElementById('excel-file').value = '';
-                    document.getElementById('file-name').textContent = '';
                     setTimeout(() => {
-                        loadStats();
                         loadDrafts();
                     }, 1000);
                 } else {
@@ -253,38 +233,20 @@
                 showMessage('Error: ' + error.message, 'danger');
             } finally {
                 document.getElementById('upload-btn').disabled = false;
-                document.getElementById('upload-btn').innerHTML = 'Upload';
+                document.getElementById('upload-btn').innerHTML = 'Upload Excel';
             }
         }
 
-        async function loadStats() {
+        async function loadDrafts(page = 1) {
             try {
-                const response = await fetch(`${API_BASE}/?limit=1000`);
+                const response = await fetch(`${API_BASE}/drafts/?page=${page}&limit=1000`);
                 const data = await response.json();
-                const products = data.results || data;
-
-                const total = products.length;
-                const drafts = products.filter(p => p.status === 'Draft').length;
-                const approved = products.filter(p => p.status === 'Approved').length;
-
-                document.getElementById('total-count').textContent = total;
-                document.getElementById('draft-count').textContent = drafts;
-                document.getElementById('approved-count').textContent = approved;
-            } catch (error) {
-                console.error('Error loading stats:', error);
-            }
-        }
-
-        async function loadDrafts() {
-            try {
-                const response = await fetch(`${API_BASE}/drafts/?limit=1000`);
-                const data = await response.json();
-                const products = data.results || data;
+                draftProducts = data.results || data;
 
                 let html = '';
                 
-                if (products.length === 0) {
-                    html = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No draft products</p></div>';
+                if (draftProducts.length === 0) {
+                    html = '<div class="empty-state"><p>No draft products found.</p></div>';
                 } else {
                     html = `
                         <div class="table-responsive">
@@ -303,7 +265,7 @@
                                 <tbody>
                     `;
                     
-                    products.forEach(product => {
+                    draftProducts.forEach(product => {
                         html += `
                             <tr>
                                 <td>${product.product_id}</td>
@@ -311,9 +273,9 @@
                                 <td>${product.category}</td>
                                 <td>$${parseFloat(product.price).toFixed(2)}</td>
                                 <td>${product.quantity}</td>
-                                <td>${new Date(product.last_updated).toLocaleDateString()}</td>
+                                <td>${new Date(product.last_updated).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit'})}</td>
                                 <td>
-                                    <button class="btn btn-approve btn-sm px-3" onclick="approveProduct(${product.id})">Approve</button>
+                                    <button class="btn btn-approve btn-sm" onclick="approveProduct(${product.id})">Approve</button>
                                 </td>
                             </tr>
                         `;
@@ -333,9 +295,9 @@
             }
         }
 
-        async function loadApproved() {
+        async function loadApproved(page = 1) {
             try {
-                const response = await fetch(`${API_BASE}/approved/?limit=1000`);
+                const response = await fetch(`${API_BASE}/approved/?page=${page}&limit=1000`);
                 const data = await response.json();
                 allApprovedProducts = data.results || data;
 
@@ -350,7 +312,7 @@
             let html = '';
             
             if (products.length === 0) {
-                html = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No approved products</p></div>';
+                html = '<div class="empty-state"><p>No approved products found.</p></div>';
             } else {
                 html = `
                     <div class="table-responsive">
@@ -376,7 +338,7 @@
                             <td>${product.category}</td>
                             <td>$${parseFloat(product.price).toFixed(2)}</td>
                             <td>${product.quantity}</td>
-                            <td>${new Date(product.last_updated).toLocaleDateString()}</td>
+                            <td>${new Date(product.last_updated).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit'})}</td>
                         </tr>
                     `;
                 });
@@ -409,9 +371,7 @@
                 if (response.ok) {
                     showMessage('Product approved successfully!', 'success');
                     setTimeout(() => {
-                        loadStats();
                         loadDrafts();
-                        loadApproved();
                     }, 500);
                 } else {
                     showMessage('Failed to approve product', 'danger');
@@ -419,6 +379,18 @@
             } catch (error) {
                 showMessage('Error: ' + error.message, 'danger');
             }
+        }
+
+        function goToApproved() {
+            document.querySelector('.container').style.display = 'none';
+            document.getElementById('approved-page').style.display = 'block';
+            loadApproved();
+        }
+
+        function goToDrafts() {
+            document.querySelector('.container').style.display = 'block';
+            document.getElementById('approved-page').style.display = 'none';
+            loadDrafts();
         }
 
         function showMessage(message, type) {
@@ -435,12 +407,8 @@
             setTimeout(() => alertDiv.remove(), 5000);
         }
 
-        // Tab switching
-        document.getElementById('drafts-tab').addEventListener('click', loadDrafts);
-        document.getElementById('approved-tab').addEventListener('click', loadApproved);
-
-        // Load stats on page load
-        window.addEventListener('load', loadStats);
+        // Load drafts on page load
+        window.addEventListener('load', loadDrafts);
     </script>
 </body>
 </html>
