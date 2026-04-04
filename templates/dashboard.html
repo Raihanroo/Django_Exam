@@ -273,7 +273,7 @@
 
         async function loadDrafts() {
             try {
-                const response = await fetch(`${API_BASE}/drafts/?limit=1000`);
+                const response = await fetch(`${API_BASE}/drafts/?limit=100`);
                 const data = await response.json();
                 draftProducts = data.results || data;
 
@@ -355,7 +355,7 @@
 
         async function loadApproved() {
             try {
-                const response = await fetch(`${API_BASE}/approved/?limit=1000`);
+                const response = await fetch(`${API_BASE}/approved/?limit=100`);
                 const data = await response.json();
                 allApprovedProducts = data.results || data;
 

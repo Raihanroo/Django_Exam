@@ -73,7 +73,7 @@ class ProductViewSet(viewsets.ModelViewSet):
                 Q(name__icontains=search) | Q(category__icontains=search)
             )
         
-        return queryset.order_by("-last_updated")
+        return queryset.order_by("-product_id")
 
     @action(detail=False, methods=["post"], parser_classes=(MultiPartParser, FormParser))
     def upload_excel(self, request):
