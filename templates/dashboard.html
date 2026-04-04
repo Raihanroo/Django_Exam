@@ -77,15 +77,15 @@
             font-weight: 600;
         }
         .btn-delete {
-            background-color: #dc3545;
-            color: white;
+            background-color: #ffc107;
+            color: black;
             font-weight: bold;
             border: none;
             padding: 6px 15px;
             font-size: 0.9em;
         }
         .btn-delete:hover {
-            background-color: #c82333;
+            background-color: #e0a800;
         }
         .alert {
             margin-bottom: 20px;
@@ -446,10 +446,6 @@
         }
 
         async function deleteProduct(id) {
-            if (!confirm('Are you sure you want to delete this product?')) {
-                return;
-            }
-
             try {
                 const response = await fetch(`${API_BASE}/${id}/`, {
                     method: 'DELETE'
@@ -459,7 +455,7 @@
                     showMessage('Product deleted successfully!', 'success');
                     setTimeout(() => {
                         loadApproved();
-                    }, 500);
+                    }, 300);
                 } else {
                     showMessage('Failed to delete product', 'danger');
                 }
