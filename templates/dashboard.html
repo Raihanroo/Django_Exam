@@ -69,6 +69,16 @@
         .btn-approve:hover {
             background-color: #e0a800;
         }
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            font-weight: 600;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
         .alert {
             margin-bottom: 20px;
         }
@@ -91,113 +101,113 @@
             color: #333;
             font-weight: 600;
         }
-        .pagination {
-            margin-top: 20px;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #999;
-        }
-        .loading {
-            text-align: center;
-            padding: 40px;
-        }
-        .spinner-border {
-            color: #007bff;
-        }
-        .nav-tabs {
-            border-bottom: 2px solid #dee2e6;
-            margin-bottom: 20px;
-        }
-        .nav-tabs .nav-link {
-            color: #666;
-            border: none;
-            border-bottom: 3px solid transparent;
-            padding: 10px 20px;
-            font-weight: 600;
-        }
-        .nav-tabs .nav-link.active {
-            color: #007bff;
-            background-color: transparent;
-            border-bottom: 3px solid #007bff;
-        }
-        .nav-tabs .nav-link:hover {
-            color: #007bff;
-        }
-        .tab-content {
+        .page-section {
             display: none;
         }
-        .tab-content.active {
+        .page-section.active {
             display: block;
+        }
+        .search-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .search-section input {
+            flex: 1;
+            max-width: 500px;
+        }
+        .search-section .btn {
+            padding: 8px 20px;
+            font-weight: 600;
+        }
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Upload Excel & Manage Drafts</h1>
+    <!-- Upload Page -->
+    <div id="upload-page" class="page-section active">
+        <div class="container">
+            <h1>Upload Excel & Manage Drafts</h1>
 
-        <!-- Messages -->
-        <div id="messages-container"></div>
+            <!-- Messages -->
+            <div id="messages-container"></div>
 
-        <!-- Upload Section -->
-        <div class="upload-section">
-            <input type="file" id="excel-file" class="form-control" accept=".xlsx,.xls" onchange="updateFileName()">
-            <button class="btn btn-upload" onclick="uploadExcel()" id="upload-btn">Upload Excel</button>
-            <button class="btn btn-approved" onclick="goToApproved()">View Approved Products</button>
-        </div>
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <input type="file" id="excel-file" class="form-control" accept=".xlsx,.xls" onchange="updateFileName()">
+                <button class="btn btn-upload" onclick="uploadExcel()" id="upload-btn">Upload Excel</button>
+                <button class="btn btn-approved" onclick="goToApproved()">View Approved Products</button>
+            </div>
 
-        <!-- Draft Products Section -->
-        <h3>Draft Products List</h3>
-        <div id="drafts-content">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped align-middle text-center">
-                    <thead>
-                        <tr>
-                            <th>Product ID</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Last Updated</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="7" style="text-align: center; color: #999; padding: 40px;">No draft products found.</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Draft Products Section -->
+            <h3>Draft Products List</h3>
+            <div id="drafts-content">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle text-center">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Last Updated</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="7" style="text-align: center; color: #999; padding: 40px;">No draft products found.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-
-        <!-- Pagination -->
-        <nav id="pagination-container"></nav>
     </div>
 
-    <!-- Approved Products Modal/Page -->
-    <div id="approved-page" style="display: none;">
+    <!-- Approved Products Page -->
+    <div id="approved-page" class="page-section">
         <div class="container">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h1>Approved Products List</h1>
-                <button class="btn btn-secondary" onclick="goToDrafts()">← Back to Upload</button>
+            <div class="header-row">
+                <h1 style="margin: 0;">Approved Products List</h1>
+                <button class="btn btn-back" onclick="goToDrafts()">← Back to Upload</button>
             </div>
 
-            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <input type="text" id="search-input" class="form-control" placeholder="Search by name or category..." onkeyup="searchApproved()" style="max-width: 500px;">
+            <!-- Search Section -->
+            <div class="search-section">
+                <input type="text" id="search-input" class="form-control" placeholder="Search by name or category..." onkeyup="searchApproved()">
                 <button class="btn btn-dark" onclick="searchApproved()">Search</button>
             </div>
 
-            <div id="approved-content" class="loading">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
+            <!-- Approved Products Table -->
+            <div id="approved-content">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center align-middle">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: #999; padding: 40px;">No approved products found.</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <p>Loading approved products...</p>
             </div>
-
-            <!-- Pagination for Approved -->
-            <nav id="approved-pagination-container"></nav>
         </div>
     </div>
 
@@ -205,7 +215,6 @@
     <script>
         const API_BASE = '/api/products';
         let allApprovedProducts = [];
-        let currentPage = 1;
         let draftProducts = [];
 
         function updateFileName() {
@@ -253,9 +262,9 @@
             }
         }
 
-        async function loadDrafts(page = 1) {
+        async function loadDrafts() {
             try {
-                const response = await fetch(`${API_BASE}/drafts/?page=${page}&limit=1000`);
+                const response = await fetch(`${API_BASE}/drafts/?limit=1000`);
                 const data = await response.json();
                 draftProducts = data.results || data;
 
@@ -309,7 +318,6 @@
                 document.getElementById('drafts-content').innerHTML = html;
             } catch (error) {
                 console.error('Error loading drafts:', error);
-                // Show table with header even on error
                 let html = `
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped align-middle text-center">
@@ -336,41 +344,42 @@
             }
         }
 
-        async function loadApproved(page = 1) {
+        async function loadApproved() {
             try {
-                const response = await fetch(`${API_BASE}/approved/?page=${page}&limit=1000`);
+                const response = await fetch(`${API_BASE}/approved/?limit=1000`);
                 const data = await response.json();
                 allApprovedProducts = data.results || data;
 
                 displayApprovedProducts(allApprovedProducts);
             } catch (error) {
                 console.error('Error loading approved:', error);
-                document.getElementById('approved-content').innerHTML = '<div class="alert alert-danger">Error loading approved products</div>';
             }
         }
 
         function displayApprovedProducts(products) {
-            let html = '';
+            let html = `
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center align-middle">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
             
             if (products.length === 0) {
-                html = '<div class="empty-state"><p>No approved products found.</p></div>';
-            } else {
-                html = `
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover text-center align-middle">
-                            <thead>
-                                <tr>
-                                    <th>Product ID</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Last Updated</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                html += `
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: #999; padding: 40px;">No approved products found.</td>
+                            </tr>
                 `;
-                
+            } else {
                 products.forEach(product => {
                     html += `
                         <tr>
@@ -383,13 +392,13 @@
                         </tr>
                     `;
                 });
-                
-                html += `
-                            </tbody>
-                        </table>
-                    </div>
-                `;
             }
+            
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
 
             document.getElementById('approved-content').innerHTML = html;
         }
@@ -413,6 +422,7 @@
                     showMessage('Product approved successfully!', 'success');
                     setTimeout(() => {
                         loadDrafts();
+                        loadApproved();
                     }, 500);
                 } else {
                     showMessage('Failed to approve product', 'danger');
@@ -423,15 +433,14 @@
         }
 
         function goToApproved() {
-            document.querySelector('.container').style.display = 'none';
-            document.getElementById('approved-page').style.display = 'block';
+            document.getElementById('upload-page').classList.remove('active');
+            document.getElementById('approved-page').classList.add('active');
             loadApproved();
         }
 
         function goToDrafts() {
-            document.querySelector('.container').style.display = 'block';
-            document.getElementById('approved-page').style.display = 'none';
-            loadDrafts();
+            document.getElementById('approved-page').classList.remove('active');
+            document.getElementById('upload-page').classList.add('active');
         }
 
         function showMessage(message, type) {
