@@ -17,7 +17,8 @@ Upload Excel files with product data. Products are automatically parsed and stor
 - Yellow "Approve" buttons for each product
 - Green "View Approved Products" button
 
-![Upload & Drafts](https://user-images.githubusercontent.com/placeholder/upload-drafts.png)
+<img width="1034" height="733" alt="Screenshot 2026-04-04 111716" src="https://github.com/user-attachments/assets/d248515c-a2f3-4da0-b9a7-e6f27e309c5c" />
+
 
 ---
 
@@ -33,7 +34,7 @@ View all uploaded products in a clean table format with all details.
 - Last Updated
 - Action (Approve button)
 
-![Draft Products](https://user-images.githubusercontent.com/placeholder/draft-products.png)
+<img width="1077" height="654" alt="Screenshot 2026-04-04 111843" src="https://github.com/user-attachments/assets/8856b919-996e-45ad-b14a-64aa95c827c6" />
 
 ---
 
@@ -60,7 +61,7 @@ View all approved products with delete functionality.
 - Search functionality available
 - Products sorted by Product ID
 
-![Approved Products](https://user-images.githubusercontent.com/placeholder/approved-products.png)
+<img width="1468" height="471" alt="Screenshot 2026-04-04 111817" src="https://github.com/user-attachments/assets/449cf15a-4a51-4bb9-b68b-2ee0ba1bd0d4" />
 
 ---
 
@@ -73,7 +74,7 @@ Before deleting, a confirmation dialog appears to prevent accidental deletion.
 - Green "Cancel" button to abort
 - Prevents accidental data loss
 
-![Delete Confirmation](https://user-images.githubusercontent.com/placeholder/delete-confirmation.png)
+<img width="1119" height="589" alt="Screenshot 2026-04-04 111901" src="https://github.com/user-attachments/assets/19ee2a20-f74d-4154-ad04-af9f8e5138be" />
 
 ---
 
@@ -86,7 +87,7 @@ Search approved products by name or category in real-time.
 3. Table filters to show matching products only
 4. Example: Search "Stationery" shows only stationery products
 
-![Search Results](https://user-images.githubusercontent.com/placeholder/search-results.png)
+<img width="999" height="298" alt="Screenshot 2026-04-04 111935" src="https://github.com/user-attachments/assets/406e6707-2eae-425b-9d67-515253706856" />
 
 ## Technology Stack
 
