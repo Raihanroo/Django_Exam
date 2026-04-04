@@ -45,9 +45,9 @@ After clicking Approve, a success message appears and product moves to approved 
 - Green success notification: "Product approved successfully!"
 - Product removed from Draft list
 - Product added to Approved list
-- Remaining drafts continue to display
+- Remaining drafts continue to 
 
-<img width="1077" height="654" alt="Screenshot 2026-04-04 111843" src="https://github.com/user-attachments/assets/34d20d5b-27f1-4a36-b1f7-07a6b8f10f2f" />
+<img width="1468" height="471" alt="Screenshot 2026-04-04 111817" src="https://github.com/user-attachments/assets/449cf15a-4a51-4bb9-b68b-2ee0ba1bd0d4" />
 
 ---
 
@@ -61,7 +61,7 @@ View all approved products with delete functionality.
 - Search functionality available
 - Products sorted by Product ID
 
-<img width="1468" height="471" alt="Screenshot 2026-04-04 111817" src="https://github.com/user-attachments/assets/449cf15a-4a51-4bb9-b68b-2ee0ba1bd0d4" />
+<img width="1077" height="654" alt="Screenshot 2026-04-04 111843" src="https://github.com/user-attachments/assets/34d20d5b-27f1-4a36-b1f7-07a6b8f10f2f" />
 
 ---
 
