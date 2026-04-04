@@ -47,7 +47,7 @@ After clicking Approve, a success message appears and product moves to approved 
 - Product added to Approved list
 - Remaining drafts continue to display
 
-![After Approval](https://user-images.githubusercontent.com/placeholder/after-approval.png)
+<img width="1077" height="654" alt="Screenshot 2026-04-04 111843" src="https://github.com/user-attachments/assets/34d20d5b-27f1-4a36-b1f7-07a6b8f10f2f" />
 
 ---
 
