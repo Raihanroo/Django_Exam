@@ -149,11 +149,27 @@
 
         <!-- Draft Products Section -->
         <h3>Draft Products List</h3>
-        <div id="drafts-content" class="loading">
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
+        <div id="drafts-content">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle text-center">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Last Updated</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: #999; padding: 40px;">No draft products found.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <p>Loading draft products...</p>
         </div>
 
         <!-- Pagination -->
@@ -243,28 +259,30 @@
                 const data = await response.json();
                 draftProducts = data.results || data;
 
-                let html = '';
+                let html = `
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped align-middle text-center">
+                            <thead>
+                                <tr>
+                                    <th>Product ID</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Last Updated</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
                 
                 if (draftProducts.length === 0) {
-                    html = '<div class="empty-state"><p>No draft products found.</p></div>';
-                } else {
-                    html = `
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped align-middle text-center">
-                                <thead>
-                                    <tr>
-                                        <th>Product ID</th>
-                                        <th>Name</th>
-                                        <th>Category</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Last Updated</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                    html += `
+                                <tr>
+                                    <td colspan="7" style="text-align: center; color: #999; padding: 40px;">No draft products found.</td>
+                                </tr>
                     `;
-                    
+                } else {
                     draftProducts.forEach(product => {
                         html += `
                             <tr>
@@ -280,18 +298,41 @@
                             </tr>
                         `;
                     });
-                    
-                    html += `
-                                </tbody>
-                            </table>
-                        </div>
-                    `;
                 }
+                
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
 
                 document.getElementById('drafts-content').innerHTML = html;
             } catch (error) {
                 console.error('Error loading drafts:', error);
-                document.getElementById('drafts-content').innerHTML = '<div class="alert alert-danger">Error loading drafts</div>';
+                // Show table with header even on error
+                let html = `
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped align-middle text-center">
+                            <thead>
+                                <tr>
+                                    <th>Product ID</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Last Updated</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="7" style="text-align: center; color: #999; padding: 40px;">No draft products found.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                document.getElementById('drafts-content').innerHTML = html;
             }
         }
 
