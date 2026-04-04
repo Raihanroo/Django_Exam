@@ -76,8 +76,16 @@
             padding: 8px 20px;
             font-weight: 600;
         }
-        .btn-back:hover {
-            background-color: #5a6268;
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 6px 15px;
+            font-size: 0.9em;
+        }
+        .btn-delete:hover {
+            background-color: #c82333;
         }
         .alert {
             margin-bottom: 20px;
@@ -198,11 +206,12 @@
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Last Updated</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="6" style="text-align: center; color: #999; padding: 40px;">No approved products found.</td>
+                                <td colspan="7" style="text-align: center; color: #999; padding: 40px;">No approved products found.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -368,6 +377,7 @@
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Last Updated</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -376,7 +386,7 @@
             if (products.length === 0) {
                 html += `
                             <tr>
-                                <td colspan="6" style="text-align: center; color: #999; padding: 40px;">No approved products found.</td>
+                                <td colspan="7" style="text-align: center; color: #999; padding: 40px;">No approved products found.</td>
                             </tr>
                 `;
             } else {
@@ -389,6 +399,9 @@
                             <td>$${parseFloat(product.price).toFixed(2)}</td>
                             <td>${product.quantity}</td>
                             <td>${new Date(product.last_updated).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit'})}</td>
+                            <td>
+                                <button class="btn btn-delete btn-sm" onclick="deleteProduct(${product.id})">Delete</button>
+                            </td>
                         </tr>
                     `;
                 });
@@ -426,6 +439,29 @@
                     }, 500);
                 } else {
                     showMessage('Failed to approve product', 'danger');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'danger');
+            }
+        }
+
+        async function deleteProduct(id) {
+            if (!confirm('Are you sure you want to delete this product?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/${id}/`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showMessage('Product deleted successfully!', 'success');
+                    setTimeout(() => {
+                        loadApproved();
+                    }, 500);
+                } else {
+                    showMessage('Failed to delete product', 'danger');
                 }
             } catch (error) {
                 showMessage('Error: ' + error.message, 'danger');
