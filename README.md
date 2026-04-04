@@ -3,63 +3,90 @@
 ## Project Overview
 A Django REST Framework-based inventory management system with Excel file upload, product approval workflow, and comprehensive API endpoints.
 
-## Features
+---
+
+## 🎯 Features & Screenshots
 
 ### 1. **Upload Excel & Manage Drafts**
-- Upload Excel files with product data
-- Automatic data parsing and validation
-- Products stored as "Draft" status initially
-- Table view with ascending order by Product ID
-- Approve button to move products to approved status
+Upload Excel files with product data. Products are automatically parsed and stored as "Draft" status.
 
-**Screenshot - Initial Upload Page:**
-![Upload Page](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/1-upload-page.png)
+**Features:**
+- Choose Excel file (.xlsx format)
+- Click "Upload Excel" button
+- Products displayed in ascending order by Product ID
+- Yellow "Approve" buttons for each product
+- Green "View Approved Products" button
+
+![Upload & Drafts](https://user-images.githubusercontent.com/placeholder/upload-drafts.png)
+
+---
 
 ### 2. **Draft Products Management**
-- View all draft products in a table format
-- Columns: Product ID, Name, Category, Price, Quantity, Last Updated, Action
-- Approve button to move product to approved status
-- Products sorted by Product ID (ascending: 1, 2, 3... 10)
+View all uploaded products in a clean table format with all details.
 
-**Screenshot - Draft Products with Data:**
-![Draft Products](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/2-draft-products.png)
+**Table Columns:**
+- Product ID (1, 2, 3... 10)
+- Name
+- Category
+- Price
+- Quantity
+- Last Updated
+- Action (Approve button)
 
-### 3. **Product Approval**
-- Click "Approve" button to move product from Draft to Approved
-- Success message displayed
-- Product automatically removed from Draft list
-- Remaining draft products continue to display
+![Draft Products](https://user-images.githubusercontent.com/placeholder/draft-products.png)
 
-**Screenshot - After Approval:**
-![After Approval](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/3-after-approval.png)
+---
+
+### 3. **Product Approval Success**
+After clicking Approve, a success message appears and product moves to approved list.
+
+**What happens:**
+- Green success notification: "Product approved successfully!"
+- Product removed from Draft list
+- Product added to Approved list
+- Remaining drafts continue to display
+
+![After Approval](https://user-images.githubusercontent.com/placeholder/after-approval.png)
+
+---
 
 ### 4. **Approved Products List**
-- View all approved products
-- Search functionality by name or category
-- Delete button (yellow) to remove products
-- Confirmation dialog before deletion
-- "Back to Upload" button to return to draft management
+View all approved products with delete functionality.
 
-**Screenshot - Approved Products:**
-![Approved Products](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/4-approved-products.png)
+**Features:**
+- All approved products displayed
+- Yellow "Delete" buttons for each product
+- "Back to Upload" button to return to drafts
+- Search functionality available
+- Products sorted by Product ID
 
-### 5. **Delete Confirmation**
-- Click delete button to trigger confirmation dialog
-- Dialog asks "Are you sure you want to delete this product?"
-- OK button to confirm deletion
-- Cancel button to abort deletion
+![Approved Products](https://user-images.githubusercontent.com/placeholder/approved-products.png)
 
-**Screenshot - Delete Confirmation:**
-![Delete Confirmation](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/5-delete-confirmation.png)
+---
+
+### 5. **Delete Confirmation Dialog**
+Before deleting, a confirmation dialog appears to prevent accidental deletion.
+
+**Dialog:**
+- Message: "Are you sure you want to delete this product?"
+- Yellow "OK" button to confirm
+- Green "Cancel" button to abort
+- Prevents accidental data loss
+
+![Delete Confirmation](https://user-images.githubusercontent.com/placeholder/delete-confirmation.png)
+
+---
 
 ### 6. **Search & Filter**
-- Search approved products by name or category
-- Real-time filtering as you type
-- Black search button for clarity
-- Shows only matching products
+Search approved products by name or category in real-time.
 
-**Screenshot - Search Results:**
-![Search Results](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/6-search-results.png)
+**How to use:**
+1. Type product name or category in search field
+2. Click black "Search" button
+3. Table filters to show matching products only
+4. Example: Search "Stationery" shows only stationery products
+
+![Search Results](https://user-images.githubusercontent.com/placeholder/search-results.png)
 
 ## Technology Stack
 
