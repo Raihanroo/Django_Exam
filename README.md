@@ -1,110 +1,76 @@
 # Django Inventory Management System (DRF)
 
+## Project Overview
 A Django REST Framework-based inventory management system with Excel file upload, product approval workflow, and comprehensive API endpoints.
 
----
+## Features
 
-## 📋 Features Overview
-
-### 1. Upload Excel & Manage Drafts
-Upload Excel files with product data and manage draft products before approval.
-
-![Upload Excel & Manage Drafts](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/01-upload-page.png)
-
-**Features:**
-- Choose and upload Excel files
+### 1. **Upload Excel & Manage Drafts**
+- Upload Excel files with product data
 - Automatic data parsing and validation
 - Products stored as "Draft" status initially
-- Blue "Upload Excel" button for submission
-- Green "View Approved Products" button for navigation
+- Table view with ascending order by Product ID
+- Approve button to move products to approved status
 
----
+**Screenshot - Initial Upload Page:**
+![Upload Page](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/1-upload-page.png)
 
-### 2. Draft Products List
-View all uploaded products in a table format with approval workflow.
+### 2. **Draft Products Management**
+- View all draft products in a table format
+- Columns: Product ID, Name, Category, Price, Quantity, Last Updated, Action
+- Approve button to move product to approved status
+- Products sorted by Product ID (ascending: 1, 2, 3... 10)
 
-![Draft Products List](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/02-draft-products.png)
+**Screenshot - Draft Products with Data:**
+![Draft Products](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/2-draft-products.png)
 
-**Features:**
-- Table with columns: Product ID, Name, Category, Price, Quantity, Last Updated, Action
-- Products sorted by Product ID in ascending order (1, 2, 3... 10)
-- Yellow "Approve" button for each product
-- Success message notification when product is approved
-- Real-time table updates
-
----
-
-### 3. Product Approval
-Approve products to move them from Draft to Approved status.
-
-![Product Approval](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/03-approval-success.png)
-
-**Features:**
-- Green success notification: "Product approved successfully!"
+### 3. **Product Approval**
+- Click "Approve" button to move product from Draft to Approved
+- Success message displayed
+- Product automatically removed from Draft list
 - Remaining draft products continue to display
-- Approved products move to the Approved Products list
-- Seamless workflow transition
 
----
+**Screenshot - After Approval:**
+![After Approval](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/3-after-approval.png)
 
-### 4. Approved Products List
-View all approved products with search and delete functionality.
+### 4. **Approved Products List**
+- View all approved products
+- Search functionality by name or category
+- Delete button (yellow) to remove products
+- Confirmation dialog before deletion
+- "Back to Upload" button to return to draft management
 
-![Approved Products List](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/04-approved-products.png)
+**Screenshot - Approved Products:**
+![Approved Products](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/4-approved-products.png)
 
-**Features:**
-- Complete list of all approved products
-- Yellow "Delete" button for each product
-- "Back to Upload" button for navigation
-- Search field for filtering by name or category
-- Black "Search" button for submission
-- Ascending order by Product ID
+### 5. **Delete Confirmation**
+- Click delete button to trigger confirmation dialog
+- Dialog asks "Are you sure you want to delete this product?"
+- OK button to confirm deletion
+- Cancel button to abort deletion
 
----
+**Screenshot - Delete Confirmation:**
+![Delete Confirmation](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/5-delete-confirmation.png)
 
-### 5. Delete Confirmation Dialog
-Confirmation dialog before deleting products.
+### 6. **Search & Filter**
+- Search approved products by name or category
+- Real-time filtering as you type
+- Black search button for clarity
+- Shows only matching products
 
-![Delete Confirmation](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/05-delete-confirmation.png)
+**Screenshot - Search Results:**
+![Search Results](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/6-search-results.png)
 
-**Features:**
-- Modal dialog with confirmation message
-- "Are you sure you want to delete this product?"
-- Yellow "OK" button to confirm deletion
-- Green "Cancel" button to abort deletion
-- Prevents accidental deletions
+## Technology Stack
 
----
+- **Backend:** Django 5.2.1
+- **API Framework:** Django REST Framework 3.14.0
+- **Database:** PostgreSQL (via Neon)
+- **Frontend:** Bootstrap 5.3.0 (Inline CSS/JS)
+- **File Processing:** Pandas 2.2.2, OpenPyXL 3.1.2
+- **Deployment:** Vercel
 
-### 6. Search & Filter
-Search approved products by name or category.
-
-![Search & Filter](https://github.com/Raihanroo/Django_Exam/raw/main/screenshots/06-search-results.png)
-
-**Features:**
-- Real-time search functionality
-- Filter by product name or category
-- Instant results display
-- Search field with placeholder text
-- Black "Search" button
-
----
-
-## 🛠️ Technology Stack
-
-| Component | Technology |
-|-----------|-----------|
-| Backend | Django 5.2.1 |
-| API Framework | Django REST Framework 3.14.0 |
-| Database | PostgreSQL (Neon) |
-| Frontend | Bootstrap 5.3.0 |
-| File Processing | Pandas 2.2.2, OpenPyXL 3.1.2 |
-| Deployment | Vercel |
-| Server | Gunicorn 21.2.0 |
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 Django_Exam/
@@ -125,14 +91,12 @@ Django_Exam/
 ├── requirements.txt          # Python dependencies
 ├── vercel.json              # Vercel deployment config
 └── build_files.sh           # Build script
+
 ```
 
----
-
-## 📊 Data Model
+## Data Model
 
 ### Product Model
-
 | Field | Type | Description |
 |-------|------|-------------|
 | id | AutoField | Primary key |
@@ -144,64 +108,52 @@ Django_Exam/
 | status | CharField | "Draft" or "Approved" |
 | last_updated | DateTimeField | Auto-updated timestamp |
 
----
+## API Endpoints
 
-## 🔌 API Endpoints
-
-### Product Management
+### 1. **Product List & Create**
 - **GET** `/api/products/` - List all products
 - **POST** `/api/products/` - Create a new product
+
+### 2. **Product Detail**
 - **GET** `/api/products/{id}/` - Get product details
 - **PUT** `/api/products/{id}/` - Update product
 - **DELETE** `/api/products/{id}/` - Delete product
 
-### Excel Upload
+### 3. **Upload Excel**
 - **POST** `/api/products/upload_excel/`
   - Form data: `excel_file` (multipart/form-data)
   - Response: `{"message": "Successfully processed X products"}`
 
-### Workflow Actions
-- **POST** `/api/products/{id}/approve/` - Approve a product
+### 4. **Approve Product**
+- **POST** `/api/products/{id}/approve/`
+  - Changes product status to "Approved"
+
+### 5. **Filter Endpoints**
 - **GET** `/api/products/drafts/` - Get all draft products
 - **GET** `/api/products/approved/` - Get all approved products
 
-### Query Parameters
+### 6. **Query Parameters**
 - `?status=Draft` or `?status=Approved` - Filter by status
 - `?search=keyword` - Search by name or category
 - `?page=1` - Pagination (100 items per page)
 
----
+## Excel File Format
 
-## 📄 Excel File Format
+Required columns in Excel file:
+- `product_id` - Unique product identifier
+- `name` - Product name
+- `category` - Product category
+- `price` - Product price
+- `quantity` - Stock quantity
 
-### Required Columns
-Your Excel file should contain these columns:
+**Supported column name variations:**
+- product_id: productid, product id, id, product
+- name: product_name, productname, title
+- category: cat, type, product_type
+- price: cost, amount, unit_price
+- quantity: qty, stock, quantity_in_stock
 
-| Column | Description | Example |
-|--------|-------------|---------|
-| product_id | Unique product identifier | 1, 2, 3... |
-| name | Product name | Wireless Headphones |
-| category | Product category | Electronics |
-| price | Product price | 2500.00 |
-| quantity | Stock quantity | 50 |
-
-### Supported Column Name Variations
-The system automatically detects column names:
-
-- **product_id**: productid, product id, id, product
-- **name**: product_name, productname, title
-- **category**: cat, type, product_type
-- **price**: cost, amount, unit_price
-- **quantity**: qty, stock, quantity_in_stock
-
----
-
-## 🚀 Installation & Setup
-
-### Prerequisites
-- Python 3.11+
-- pip (Python package manager)
-- Git
+## Installation & Setup
 
 ### Local Development
 
@@ -237,9 +189,7 @@ python manage.py runserver
 http://localhost:8000/
 ```
 
----
-
-## 🌐 Deployment
+## Deployment
 
 ### Vercel Deployment
 
@@ -263,9 +213,7 @@ git push origin main
 https://django-exam.vercel.app/
 ```
 
----
-
-## 📖 Usage Workflow
+## Usage Workflow
 
 ### Step 1: Upload Excel File
 1. Go to the dashboard
@@ -276,16 +224,15 @@ https://django-exam.vercel.app/
 ### Step 2: Review Draft Products
 1. View all uploaded products in the table
 2. Check product details (ID, Name, Category, Price, Quantity)
-3. Products are sorted by Product ID in ascending order (1, 2, 3... 10)
+3. Products are sorted by Product ID in ascending order
 
 ### Step 3: Approve Products
-1. Click the yellow "Approve" button for each product
+1. Click "Approve" button for each product you want to approve
 2. Product status changes from "Draft" to "Approved"
-3. Success notification appears
-4. Product moves to the Approved Products list
+3. Product moves to the Approved Products list
 
 ### Step 4: View Approved Products
-1. Click the green "View Approved Products" button
+1. Click "View Approved Products" button
 2. See all approved products in a separate table
 3. Use search to filter by name or category
 
@@ -295,9 +242,7 @@ https://django-exam.vercel.app/
 3. Click "OK" to confirm deletion
 4. Product will be removed from the system
 
----
-
-## 💻 Example API Requests
+## Example API Requests
 
 ### Upload Excel
 ```bash
@@ -325,45 +270,34 @@ curl "http://localhost:8000/api/products/approved/?search=laptop"
 curl -X DELETE http://localhost:8000/api/products/1/
 ```
 
----
-
-## ✨ Key Features Implemented
+## Key Features Implemented
 
 ✅ Excel file upload with flexible column mapping
 ✅ Automatic data validation and error handling
 ✅ Draft and Approved product workflow
-✅ RESTful API with Django REST Framework
+✅ RESTful API with DRF
 ✅ Search and filter functionality
 ✅ Pagination support (100 items per page)
-✅ Product deletion with confirmation dialog
+✅ Product deletion with confirmation
 ✅ Responsive Bootstrap UI
 ✅ Vercel deployment ready
 ✅ No static files required (inline CSS/JS)
-✅ Real-time notifications
-✅ Ascending order sorting by Product ID
 
----
+## Browser Compatibility
 
-## 🌍 Browser Compatibility
+- Chrome/Edge (Latest)
+- Firefox (Latest)
+- Safari (Latest)
+- Mobile browsers
 
-- ✅ Chrome/Edge (Latest)
-- ✅ Firefox (Latest)
-- ✅ Safari (Latest)
-- ✅ Mobile browsers
-
----
-
-## ⚡ Performance
+## Performance
 
 - **Upload Speed:** Optimized for large Excel files
 - **Pagination:** 100 products per page
 - **Search:** Real-time filtering
 - **Database:** PostgreSQL with connection pooling
-- **Response Time:** < 500ms for most operations
 
----
-
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - User authentication and authorization
 - Product image upload
@@ -372,32 +306,21 @@ curl -X DELETE http://localhost:8000/api/products/1/
 - Advanced filtering and sorting
 - Product history/audit log
 - Email notifications
-- Role-based access control
-- Product categories management
 
----
-
-## 📝 License
+## License
 
 This project is open source and available under the MIT License.
 
----
-
-## 🤝 Support
+## Support
 
 For issues or questions, please create an issue on GitHub:
 https://github.com/Raihanroo/Django_Exam/issues
 
----
-
-## 🎯 Live Demo
+## Live Demo
 
 **URL:** https://django-exam.vercel.app/
 
-Try the application live and test all features!
-
 ---
 
-**Created by:** Raihan  
-**Last Updated:** April 2026  
-**Version:** 2.0 (DRF)
+**Created by:** Raihan
+**Last Updated:** April 2026
